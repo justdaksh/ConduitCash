@@ -15,6 +15,7 @@ import { SubmitButton } from "../Form/SubmitButton";
 import { FormFooter } from "../Form/FormFooter";
 
 export const Login = React.memo(function Login() {
+  console.log(`${import.meta.env.VITE_API_BASE_URL}auth/login`);
   const [username, setUsername] = useRecoilState(usernameAtom);
   const [password, setPassword] = useRecoilState(passwordAtom);
   const setFirstname = useSetRecoilState(firstnameAtom);
@@ -25,7 +26,7 @@ export const Login = React.memo(function Login() {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/auth/login",
+        `${import.meta.env.VITE_API_BASE_URL}auth/login`,
         {
           username: username,
           password: password,

@@ -29,7 +29,7 @@ export const SendMoney = React.memo(function SendMoney() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/account/transfer",
+        `${import.meta.env.VITE_API_BASE_URL}account/transfer`,
         {
           to: to,
           amount: amount,

@@ -37,7 +37,7 @@ function BalanceComponent() {
   const fetchBalance = useCallback(async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/api/v1/account/balance",
+        `${import.meta.env.VITE_API_BASE_URL}account/balance`,
         {
           headers: {
             Authorization: localStorage.getItem("token") || null,

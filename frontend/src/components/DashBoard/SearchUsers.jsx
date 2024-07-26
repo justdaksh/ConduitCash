@@ -15,7 +15,7 @@ export const SearchUsers = React.memo(function SearchUsers() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const response = await axios.get(
-      `http://localhost:8000/api/v1/user/bulk?filter=${Query}`,
+      `${import.meta.env.VITE_API_BASE_URL}user/bulk?filter=${Query}`,
       {
         headers: {
           Authorization: localStorage.getItem("token"),
