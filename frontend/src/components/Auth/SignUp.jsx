@@ -2,7 +2,6 @@ import React from "react";
 import { Header } from "../Form/Header";
 import { Email } from "../Form/Email";
 import { Password } from "../Form/Password";
-import { RememberMe } from "../Form/RememberMe";
 import { SubmitButton } from "../Form/SubmitButton";
 import { SimpleInput } from "../Form/SimpleInput";
 import { FormFooter } from "../Form/FormFooter";
@@ -83,11 +82,11 @@ export const SignUp = React.memo(function SignUp() {
     }
   };
   return (
-    <>
-      <div className="flex justify-center items-center h-lvh bg-gradient-to-br from-gray-700 to-gray-900">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-100 to-gray-300">
+      <div className="w-full max-w-4xl p-6">
         <form
           onSubmit={handleSubmit}
-          className="bg-white p-8 rounded-xl shadow-2xl shadow-black/50 backdrop-blur-sm bg-gray-100/90"
+          className="bg-white p-8 rounded-xl shadow-lg"
         >
           <SignUpForm
             username={username}
@@ -100,7 +99,7 @@ export const SignUp = React.memo(function SignUp() {
           />
         </form>
       </div>
-    </>
+    </div>
   );
 });
 
@@ -117,54 +116,65 @@ const SignUpForm = ({
     <>
       <Header
         title="Sign Up"
-        desc="Enter Your Information to create an account"
+        desc="Enter your information to create an account"
+        className="text-center mb-8"
       />
-      <SimpleInput
-        label="Username"
-        id="username"
-        placeholder="Write your username"
-        value={username}
-        onChange={handleChange}
+  
+      <div className="flex flex-col md:flex-row md:space-x-6 mb-6">
+        <div className="flex-1 space-y-4">
+          <SimpleInput
+            label="Username"
+            id="username"
+            placeholder="Enter your username"
+            value={username}
+            onChange={handleChange}
+          />
+          <SimpleInput
+            label="First Name"
+            id="firstname"
+            placeholder="Enter your first name"
+            value={firstname}
+            onChange={handleChange}
+          />
+          <SimpleInput
+            label="Last Name"
+            id="lastname"
+            placeholder="Enter your last name"
+            value={lastname}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="flex-1 space-y-4">
+          <SimpleInput
+            label="Mobile Number"
+            id="number"
+            placeholder="Enter your mobile number"
+            value={number}
+            onChange={handleChange}
+          />
+          <Email
+            label="Email"
+            id="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={handleChange}
+          />
+          <Password
+            label="Password"
+            id="password"
+            placeholder="Create a password"
+            value={password}
+            onChange={handleChange}
+          />
+        </div>
+      </div>
+  
+      <SubmitButton 
+        title="Sign Up" 
+        className="w-full py-3 px-6 text-lg font-semibold text-white bg-gray-800 rounded-lg hover:bg-gray-700 transition duration-300 ease-in-out"
       />
-
-      <SimpleInput
-        label="FirstName"
-        id="firstname"
-        placeholder="Write your firstname"
-        value={firstname}
-        onChange={handleChange}
-      />
-
-      <SimpleInput
-        label="LastName"
-        id="lastname"
-        placeholder="Write your lastname"
-        value={lastname}
-        onChange={handleChange}
-      />
-
-      <SimpleInput
-        label="Mobile Number"
-        id="number"
-        placeholder="Write your number"
-        value={number}
-        onChange={handleChange}
-      />
-
-      <Email label="Email" id="email" value={email} onChange={handleChange} />
-
-      <Password
-        label="Password"
-        id="password"
-        value={password}
-        onChange={handleChange}
-      />
-
-      <RememberMe label="Remember Me"/>
-
-      <SubmitButton title="SignUp" />
-
-      <FormFooter text="Already have an account?" title="Login" link="login" />
+  
+      <FormFooter link="login" text="Already have an account?" />
     </>
   );
 };

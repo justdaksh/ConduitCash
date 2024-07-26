@@ -7,15 +7,16 @@ export const FormFooter = React.memo(function FormFooter (props) {
         navigate(`/${props.link}`);
     }
     return <>
-        <div className="flex justify-center mt-3">
-        <div className="mr-1">
-            {props.text}
-        </div>
-        <div onClick={handleclick} className="cursor-pointer">
-            <span className="underline">
-            {props.title}
-            </span>
-        </div>
+        <div className="mt-6 text-center">
+        <p className="text-gray-600">
+          {props.text} {" "}
+          <button 
+            onClick={handleclick}
+            className="text-gray-800 font-semibold hover:underline focus:outline-none"
+          >
+            {props.link}
+          </button>
+        </p>
         </div>
     </>
 })
