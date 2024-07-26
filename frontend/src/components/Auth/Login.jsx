@@ -1,14 +1,14 @@
 import React from "react";
-import { Header } from "./Form/Header";
 import axios from "axios"; 
-import { Password } from "./Form/Password";
-import { RememberMe } from "./Form/RememberMe";
-import { SubmitButton } from "./Form/SubmitButton";
-import { FormFooter } from "./Form/FormFooter";
-import { SimpleInput } from "./Form/SimpleInput";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { firstnameAtom, lastnameAtom, passwordAtom, usernameAtom } from "../state/atom";
+import { firstnameAtom, lastnameAtom, passwordAtom,usernameAtom } from "../../state/atom";
+import { Header } from "../Form/Header";
+import { SimpleInput } from "../Form/SimpleInput";
+import { Password } from "../Form/Password";
+import { RememberMe } from "../Form/RememberMe";
+import { SubmitButton } from "../Form/SubmitButton";
+import { FormFooter } from "../Form/FormFooter";
 
 export const Login = React.memo(function Login() {
     const [username,setUsername] = useRecoilState(usernameAtom);

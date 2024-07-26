@@ -1,15 +1,14 @@
 import React from "react";
 import { DashBar } from "./DashBar";
-import { SearchFriends } from "./SearchFriends";
+import { SearchUsers } from "./SearchUsers";
 
 export const Dashboard = React.memo(function Dashboard() {
   return (
     <>
       <div className="h-lvh p-5 bg-gradient-to-br from-gray-700 to-gray-900">
         <DashBar />
-        <SearchFriends />
+        <SearchUsers />
       </div>
     </>
   );
 });
-

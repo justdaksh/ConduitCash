@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { Header } from "./Form/Header";
-import { SimpleInput } from "./Form/SimpleInput";
-import { SubmitButton } from "./Form/SubmitButton";
+import { Header } from "../Form/Header";
+import { SimpleInput } from "../Form/SimpleInput";
+import { SubmitButton } from "../Form/SubmitButton";
 import axios from "axios";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { sendAmountAtom, sendToAtom } from "../state/atom";
+import { sendAmountAtom, sendToAtom } from "../../state/atom";
 import { useNavigate } from "react-router-dom";
 
 export const SendMoney = React.memo(function SendMoney() {
   const [sentMoney, setSentMoney] = useState(false);
+  const [residualBalance, setResidualBalance] = useState(null);
   const [amount, setAmount] = useRecoilState(sendAmountAtom);
+
   const to = useRecoilValue(sendToAtom);
   const navigate = useNavigate();
 
@@ -46,6 +48,9 @@ export const SendMoney = React.memo(function SendMoney() {
       }
     } catch (error) {
       console.error("Transfer failed:", error);
+      if (error.response && error.response.data) {
+        setResidualBalance(error.response.data.message);
+      }
     }
   };
 
@@ -71,16 +76,25 @@ export const SendMoney = React.memo(function SendMoney() {
               onChange={handleChange}
             />
           </div>
+          <div className="mt-3">
           {sentMoney ? (
             <>
-            <SubmitButton title="Sent!" />
-            <div className="mt-4 text-sm font-medium text-gray-500">
-              Redirecting to dashboard shortly...
-            </div>
+              <SubmitButton title="Sent!" />
+              <div className="mt-4 text-sm font-medium text-gray-500">
+                Redirecting to dashboard shortly...
+              </div>
             </>
           ) : (
-            <SubmitButton title="Initiate Transfer!" />
+            <>
+              <SubmitButton title="Initiate Transfer!" />
+              {residualBalance !== null && (
+                <div className="mt-4 text-sm font-medium text-center text-wrap text-gray-500">
+                  {residualBalance}.
+                </div>
+              )}
+            </>
           )}
+          </div>
         </form>
       </div>
     </>

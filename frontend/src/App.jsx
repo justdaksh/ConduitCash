@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { SignUp } from "./components/SignUp";
-import { Login } from "./components/Login";
-import { Dashboard } from "./components/Dashboard";
-import { SendMoney } from "./components/SendMoney";
 import { RecoilRoot } from "recoil";
+import { Dashboard } from "./components/DashBoard/Dashboard";
+import { Login } from "./components/Auth/Login";
+import { SignUp } from "./components/Auth/SignUp";
+import { SendMoney } from "./components/Money/SendMoney";
 
 function App() {
   return (

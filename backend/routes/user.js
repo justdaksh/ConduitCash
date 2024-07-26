@@ -56,10 +56,7 @@ router.get("/bulk", verifyToken, async (req, res) => {
   try {
     const name = req.query.filter || "";
     const users = await User.find({
-      $or: [
-        { firstname: { $regex: name, $options: "i" } },
-        { lastname: { $regex: name, $options: "i" } },
-      ],
+      username: {$regex:name, $options: "i"}
     });
     res.status(200).json({
       message: "Users fetched successfully",

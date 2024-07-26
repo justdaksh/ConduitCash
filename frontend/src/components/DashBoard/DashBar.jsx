@@ -1,12 +1,17 @@
 import axios from "axios";
 import { useCallback, useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { balanceAtom, firstnameAtom, lastnameAtom, usernameAtom } from "../state/atom";
+import {
+  balanceAtom,
+  firstnameAtom,
+  lastnameAtom,
+  usernameAtom,
+} from "../../state/atom";
 
 export function DashBar() {
-    const firstname = useRecoilValue(firstnameAtom);
-    const lastname = useRecoilValue(lastnameAtom);
-    const username = useRecoilValue(usernameAtom);
+  const firstname = useRecoilValue(firstnameAtom);
+  const lastname = useRecoilValue(lastnameAtom);
+  const username = useRecoilValue(usernameAtom);
 
   return (
     <>
@@ -18,7 +23,8 @@ export function DashBar() {
         <div className="flex justify-between items-center">
           <div className="font-semibold text-xl mr-3">Hello, {username}</div>
           <div className="p-3 rounded-full bg-slate-400">
-            {firstname.substring(0,1).toUpperCase() + lastname.substring(0,1).toUpperCase()}
+            {firstname.substring(0, 1).toUpperCase() +
+              lastname.substring(0, 1).toUpperCase()}
           </div>
         </div>
       </div>

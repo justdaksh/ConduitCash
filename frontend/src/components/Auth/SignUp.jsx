@@ -1,11 +1,11 @@
 import React from "react";
-import { Header } from "./Form/Header";
-import { Email } from "./Form/Email";
-import { Password } from "./Form/Password";
-import { RememberMe } from "./Form/RememberMe";
-import { SubmitButton } from "./Form/SubmitButton";
-import { SimpleInput } from "./Form/SimpleInput";
-import { FormFooter } from "./Form/FormFooter";
+import { Header } from "../Form/Header";
+import { Email } from "../Form/Email";
+import { Password } from "../Form/Password";
+import { RememberMe } from "../Form/RememberMe";
+import { SubmitButton } from "../Form/SubmitButton";
+import { SimpleInput } from "../Form/SimpleInput";
+import { FormFooter } from "../Form/FormFooter";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {
@@ -15,7 +15,7 @@ import {
   numberAtom,
   passwordAtom,
   usernameAtom,
-} from "../state/atom";
+} from "../../state/atom";
 import { useRecoilState } from "recoil";
 
 export const SignUp = React.memo(function SignUp() {
