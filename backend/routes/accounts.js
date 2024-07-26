@@ -19,13 +19,14 @@ router.post("/transfer", verifyToken, async (req, res) => {
   const session = await mongoose.startSession();
 
   session.startTransaction();
-  const { amount, to } = req.body;
+  let { amount, to } = req.body;
+  let myAmount = parseInt(amount);
 
   const account = await Account.findOne({ userId: req.userId }).session(
     session
   );
 
-  if (!account || account.balance < amount) {
+  if (!account || account.balance < myAmount) {
     await session.abortTransaction();
     return res.status(400).json({
       message: "Insufficient balance",
@@ -43,15 +44,16 @@ router.post("/transfer", verifyToken, async (req, res) => {
 
   await Account.updateOne(
     { userId: req.userId },
-    { $inc: { balance: -amount } }
+    { $inc: { balance: -myAmount } }
   ).session(session);
   await Account.updateOne(
     { userId: to },
-    { $inc: { balance: amount } }
+    { $inc: { balance: myAmount } }
   ).session(session);
 
   await session.commitTransaction();
   res.json({
+    success:true,
     message: "Transfer successful",
   });
 });

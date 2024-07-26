@@ -41,8 +41,7 @@ export const  FriendComponent = () => {
 const UserComponent = ({user,id}) => {
     const navigate = useNavigate();
     const setReceiver = useSetRecoilState(sendToAtom);
-    const handleClick = (event) => {
-        event.preventDefault();
+    const handleClick = () => {
         setReceiver(id);
         navigate("/send");
     }

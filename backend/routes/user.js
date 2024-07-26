@@ -23,8 +23,6 @@ router.put("/update", verifyToken, async (req, res) => {
     }
 
     let updateData = validationResult.data;
-
-    // If password is being updated, hash it
     if (updateData.password) {
       const salt = await bcrypt.genSalt(10);
       updateData.password = await bcrypt.hash(updateData.password, salt);
@@ -49,7 +47,7 @@ router.put("/update", verifyToken, async (req, res) => {
         .json({ message: "Invalid user data", errors: err.errors });
     } else {
       console.error(err);
-      res.status(500).json({ message: "Server error" });
+      res.status(500).json({ message: "Update failed" });
     }
   }
 });
@@ -74,7 +72,7 @@ router.get("/bulk", verifyToken, async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "bulk fetch failed" });
   }
 });
 module.exports = router;

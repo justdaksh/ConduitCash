@@ -49,7 +49,7 @@ export const userNameSelector = selector({
     key: 'userNameSelector',
     get: ({ get }) => {
       const userId = get(userIdAtom);
-      // This is a placeholder. In a real app, you'd fetch the user's name based on the userId
+      
       return userId ? 'User' : 'Guest';
     },
   });

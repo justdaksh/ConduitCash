@@ -15,8 +15,8 @@ export const SimpleInput = React.memo(function SimpleInput(props) {
       <input
         type={props.type || "text"}
         id={props.id}
-        value={props.InputValue}
-        onChange={props.handleInputChange}
+        value={props.value}
+        onChange={props.onChange}
         className={InputStyle}
         placeholder={props.placeholder}
         required

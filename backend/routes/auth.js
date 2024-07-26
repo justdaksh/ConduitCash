@@ -97,6 +97,9 @@ router.post("/login", async (req, res) => {
       message: "Login successful",
       token: token,
       userId: user._id,
+      username: user.username,
+      firstname: user.firstname,
+      lastname: user.lastname,
     });
   } catch (err) {
     if (err instanceof z.ZodError) {

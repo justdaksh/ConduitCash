@@ -7,12 +7,15 @@ import { SubmitButton } from "./Form/SubmitButton";
 import { FormFooter } from "./Form/FormFooter";
 import { SimpleInput } from "./Form/SimpleInput";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { passwordAtom, usernameAtom } from "../state/atom";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { firstnameAtom, lastnameAtom, passwordAtom, usernameAtom } from "../state/atom";
 
 export const Login = React.memo(function Login() {
     const [username,setUsername] = useRecoilState(usernameAtom);
     const [password,setPassword] = useRecoilState(passwordAtom);
+    const setFirstname = useSetRecoilState(firstnameAtom);
+    const setLastname = useSetRecoilState(lastnameAtom);
+
     const navigate = useNavigate();
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -24,7 +27,8 @@ export const Login = React.memo(function Login() {
             if (response.data.token) {
                 localStorage.setItem("token", `Bearer ${response.data.token}`);
                 axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
-                
+                setFirstname(response.data.firstname);
+                setLastname(response.data.lastname);
                 navigate("/dashboard");
             } else {
                 console.error("No token received from backend:", response.data);
