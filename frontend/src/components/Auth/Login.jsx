@@ -1,13 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import {
-  firstnameAtom,
-  lastnameAtom,
-  passwordAtom,
-  usernameAtom,
-} from "../../state/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { passwordAtom, usernameAtom } from "../../state/atom";
 import { Header } from "../Form/Header";
 import { SimpleInput } from "../Form/SimpleInput";
 import { Password } from "../Form/Password";
@@ -15,11 +10,9 @@ import { SubmitButton } from "../Form/SubmitButton";
 import { FormFooter } from "../Form/FormFooter";
 
 export const Login = React.memo(function Login() {
-  console.log(`${import.meta.env.VITE_API_BASE_URL}auth/login`);
   const [username, setUsername] = useRecoilState(usernameAtom);
   const [password, setPassword] = useRecoilState(passwordAtom);
-  const setFirstname = useSetRecoilState(firstnameAtom);
-  const setLastname = useSetRecoilState(lastnameAtom);
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
@@ -34,20 +27,15 @@ export const Login = React.memo(function Login() {
       );
       if (response.data.token) {
         localStorage.setItem("token", `Bearer ${response.data.token}`);
-        axios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${response.data.token}`;
-        setFirstname(response.data.firstname);
-        setLastname(response.data.lastname);
+        localStorage.setItem("username", `${response.data.username}`);
+        localStorage.setItem("firstname", `${response.data.firstname}`);
+        localStorage.setItem("lastname", `${response.data.lastname}`);
         navigate("/dashboard");
       } else {
-        console.error("No token received from backend:", response.data);
+        console.warn("No token received from backend:", response.data);
       }
     } catch (error) {
-      console.error(
-        "Login Error:",
-        error.response ? error.response.data : error.message
-      );
+      setError(error.response.data.message);
     }
   };
 
@@ -72,6 +60,9 @@ export const Login = React.memo(function Login() {
           className="bg-white p-8 rounded-xl shadow-lg"
         >
           <LoginForm onChange={handleChange} />
+          {error && (
+            <div className="text-red-500 text-sm text-center mt-3">{error}</div>
+          )}
         </form>
       </div>
     </div>
@@ -108,13 +99,12 @@ const LoginForm = ({ onChange }) => {
       </div>
 
       <div className="mt-8">
-        <SubmitButton 
-          title="Log In" 
+        <SubmitButton
+          title="Log In"
           className="w-full py-3 px-6 text-lg font-semibold text-white bg-gray-800 rounded-lg hover:bg-gray-700 transition duration-300 ease-in-out"
         />
       </div>
       <FormFooter link="signup" text="Don't have an account?" />
-      
     </>
   );
 };

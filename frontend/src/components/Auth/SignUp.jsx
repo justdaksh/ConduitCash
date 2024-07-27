@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Header } from "../Form/Header";
 import { Email } from "../Form/Email";
 import { Password } from "../Form/Password";
@@ -25,6 +25,7 @@ export const SignUp = React.memo(function SignUp() {
   const [email, setEmail] = useRecoilState(emailAtom);
   const [password, setPassword] = useRecoilState(passwordAtom);
   const [number, setNumber] = useRecoilState(numberAtom);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -40,20 +41,16 @@ export const SignUp = React.memo(function SignUp() {
           email: email,
         }
       );
-
+        console.log(response.data);
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
-
-        axios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${response.data.token}`;
-
+        localStorage.setItem("username", response.data.username);
+        localStorage.setItem("firstname", response.data.firstname);
+        localStorage.setItem("lastname", response.data.lastname);
         navigate("/dashboard");
-      } else {
-        console.log(response.data);
       }
     } catch (error) {
-      console.error("SignUp Error:", error);
+      setError(error.response.data.message);
     }
   };
   const handleChange = (event) => {
@@ -97,6 +94,7 @@ export const SignUp = React.memo(function SignUp() {
             password={password}
             handleChange={handleChange}
           />
+        {error && <div className="text-red-500 text-sm text-center mt-3">{error}</div>}
         </form>
       </div>
     </div>
