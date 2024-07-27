@@ -1,14 +1,17 @@
 import axios from "axios";
 import { useCallback, useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   balanceAtom,
+  firstnameAtom,
+  lastnameAtom,
+  usernameAtom,
 } from "../../state/atom";
 
 export function DashBar() {
-  const firstname = localStorage.getItem("firstname");
-  const lastname = localStorage.getItem("lastname");
-  const username = localStorage.getItem("username");
+  const firstname = useRecoilValue(firstnameAtom);
+  const lastname = useRecoilValue(lastnameAtom);
+  const username = useRecoilValue(usernameAtom);
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-6">
@@ -16,9 +19,12 @@ export function DashBar() {
         <div className="font-bold text-2xl text-gray-800">Paytm App</div>
         <BalanceComponent />
         <div className="flex items-center space-x-4">
-          <div className="font-semibold text-xl text-gray-700">Hello, {username}</div>
+          <div className="font-semibold text-xl text-gray-700">
+            Hello, {username}
+          </div>
           <div className="w-10 h-10 rounded-full bg-gray-800 text-white flex items-center justify-center text-lg font-semibold">
-            {firstname.substring(0, 1).toUpperCase() + lastname.substring(0, 1).toUpperCase()}
+            {firstname.substring(0, 1).toUpperCase() +
+              lastname.substring(0, 1).toUpperCase()}
           </div>
         </div>
       </div>
@@ -57,7 +63,7 @@ function BalanceComponent() {
       ) : (
         <div className="text-xl font-medium text-gray-500">Loading...</div>
       )}
-      <button 
+      <button
         onClick={fetchBalance}
         className="ml-2 p-1 rounded-full hover:bg-gray-200 transition duration-300"
       >

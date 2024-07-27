@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { passwordAtom, usernameAtom } from "../../state/atom";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  emailAtom,
+  firstnameAtom,
+  lastnameAtom,
+  numberAtom,
+  passwordAtom,
+  usernameAtom,
+} from "../../state/atom";
 import { Header } from "../Form/Header";
 import { SimpleInput } from "../Form/SimpleInput";
 import { Password } from "../Form/Password";
@@ -13,6 +20,11 @@ export const Login = React.memo(function Login() {
   const [username, setUsername] = useRecoilState(usernameAtom);
   const [password, setPassword] = useRecoilState(passwordAtom);
   const [error, setError] = useState("");
+
+  const setFirstname = useSetRecoilState(firstnameAtom);
+  const setLastname = useSetRecoilState(lastnameAtom);
+  const setEmail = useSetRecoilState(emailAtom);
+  const setNumber = useSetRecoilState(numberAtom);
 
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
@@ -26,10 +38,10 @@ export const Login = React.memo(function Login() {
         }
       );
       if (response.data.token) {
-        localStorage.setItem("token", `Bearer ${response.data.token}`);
-        localStorage.setItem("username", `${response.data.username}`);
-        localStorage.setItem("firstname", `${response.data.firstname}`);
-        localStorage.setItem("lastname", `${response.data.lastname}`);
+        setFirstname(`${response.data.firstname}`);
+        setLastname(`${response.data.lastname}`);
+        setEmail(`${response.data.email}`);
+        setNumber(`${response.data.number}`);
         navigate("/dashboard");
       } else {
         console.warn("No token received from backend:", response.data);

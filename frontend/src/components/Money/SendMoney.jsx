@@ -4,7 +4,12 @@ import { SimpleInput } from "../Form/SimpleInput";
 import { SubmitButton } from "../Form/SubmitButton";
 import axios from "axios";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { receiverAtom, sendAmountAtom, sendToAtom } from "../../state/atom";
+import {
+  receiverAtom,
+  sendAmountAtom,
+  sendToAtom,
+  usernameAtom,
+} from "../../state/atom";
 import { useNavigate } from "react-router-dom";
 
 export const SendMoney = React.memo(function SendMoney() {
@@ -14,6 +19,8 @@ export const SendMoney = React.memo(function SendMoney() {
 
   const receiverId = useRecoilValue(sendToAtom);
   const receiverName = useRecoilValue(receiverAtom);
+  const username = useRecoilValue(usernameAtom);
+
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -64,10 +71,10 @@ export const SendMoney = React.memo(function SendMoney() {
         >
           <Header
             title="Send Money"
-            desc={`From ${localStorage.getItem("username")} to ${receiverName}`}
+            desc={`From ${username} to ${receiverName}`}
             className="text-center mb-6"
           />
-          
+
           <div className="mb-6">
             <SimpleInput
               type="number"
@@ -78,11 +85,11 @@ export const SendMoney = React.memo(function SendMoney() {
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent"
             />
           </div>
-          
+
           {sentMoney ? (
             <div className="text-center">
-              <SubmitButton 
-                title="Sent!" 
+              <SubmitButton
+                title="Sent!"
                 className="w-full py-3 px-6 text-lg font-semibold text-white bg-green-600 rounded-lg hover:bg-green-700 transition duration-300 mb-4"
                 disabled
               />
@@ -92,8 +99,8 @@ export const SendMoney = React.memo(function SendMoney() {
             </div>
           ) : (
             <div>
-              <SubmitButton 
-                title="Initiate Transfer" 
+              <SubmitButton
+                title="Initiate Transfer"
                 className="w-full py-3 px-6 text-lg font-semibold text-white bg-gray-800 rounded-lg hover:bg-gray-700 transition duration-300 mb-4"
               />
               {residualBalance !== null && (

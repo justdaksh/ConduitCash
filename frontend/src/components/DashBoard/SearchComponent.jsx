@@ -1,6 +1,9 @@
+import { useRecoilValue } from "recoil";
 import { UserComponent } from "./UserComponent";
+import { usernameAtom } from "../../state/atom";
 
 export const SearchComponent = ({ filter }) => {
+  const username = useRecoilValue(usernameAtom);
   return (
     <div className="divide-y divide-gray-200">
       {filter == null || filter.length === 0 ? (
@@ -24,7 +27,7 @@ export const SearchComponent = ({ filter }) => {
         </div>
       ) : (
         filter
-          .filter((user) => user.username !== localStorage.getItem("username"))
+          .filter((user) => user.username !== username)
           .map((user) => (
             <UserComponent key={user._id} id={user._id} user={user} />
           ))

@@ -41,12 +41,16 @@ export const SignUp = React.memo(function SignUp() {
           email: email,
         }
       );
-        console.log(response.data);
+      console.log(response.data);
       if (response.data.token) {
+        setFirstname(response.data.firstname);
+        setLastname(response.data.lastname);
+        setEmail(response.data.email);
+        setNumber(response.data.number);
+        setUsername(response.data.username);
+
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("username", response.data.username);
-        localStorage.setItem("firstname", response.data.firstname);
-        localStorage.setItem("lastname", response.data.lastname);
+
         navigate("/dashboard");
       }
     } catch (error) {
@@ -94,7 +98,9 @@ export const SignUp = React.memo(function SignUp() {
             password={password}
             handleChange={handleChange}
           />
-        {error && <div className="text-red-500 text-sm text-center mt-3">{error}</div>}
+          {error && (
+            <div className="text-red-500 text-sm text-center mt-3">{error}</div>
+          )}
         </form>
       </div>
     </div>
@@ -117,7 +123,7 @@ const SignUpForm = ({
         desc="Enter your information to create an account"
         className="text-center mb-8"
       />
-  
+
       <div className="flex flex-col md:flex-row md:space-x-6 mb-6">
         <div className="flex-1 space-y-4">
           <SimpleInput
@@ -166,12 +172,12 @@ const SignUpForm = ({
           />
         </div>
       </div>
-  
-      <SubmitButton 
-        title="Sign Up" 
+
+      <SubmitButton
+        title="Sign Up"
         className="w-full py-3 px-6 text-lg font-semibold text-white bg-gray-800 rounded-lg hover:bg-gray-700 transition duration-300 ease-in-out"
       />
-  
+
       <FormFooter link="login" text="Already have an account?" />
     </>
   );
