@@ -45,14 +45,10 @@ export const tokenAtom = atom({
     default: localStorage.getItem('token') || '',
   });
 
-export const userNameSelector = selector({
-    key: 'userNameSelector',
-    get: ({ get }) => {
-      const userId = get(userIdAtom);
-      
-      return userId ? 'User' : 'Guest';
-    },
-  });
+export const receiverAtom = atom({
+    key:"receiverAtom",
+    default:""
+})
 
 export const sendToAtom = atom({
     key:"sendToAtom",

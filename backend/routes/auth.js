@@ -51,10 +51,13 @@ router.post("/signup", async (req, res) => {
     const token = jwt.sign({ userId: newUser._id }, JWT_SECRET, {
       expiresIn: "10d",
     });
-
     res.json({
       message: "User created successfully",
       token: token,
+      userId: newUser._id,
+      username: newUser.username,
+      firstname: newUser.firstname,
+      lastname: newUser.lastname,
     });
   } catch (err) {
     if (err instanceof z.ZodError) {

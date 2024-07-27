@@ -55,6 +55,7 @@ router.post("/transfer", verifyToken, async (req, res) => {
   res.json({
     success:true,
     message: "Transfer successful",
+    receiver: toAccount.username,
   });
 });
 module.exports = router;
