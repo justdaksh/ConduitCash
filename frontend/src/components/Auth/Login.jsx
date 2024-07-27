@@ -38,6 +38,7 @@ export const Login = React.memo(function Login() {
         }
       );
       if (response.data.token) {
+        localStorage.setItem("token", `Bearer ${response.data.token}`);
         setFirstname(`${response.data.firstname}`);
         setLastname(`${response.data.lastname}`);
         setEmail(`${response.data.email}`);

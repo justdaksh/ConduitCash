@@ -8,7 +8,11 @@ router.get("/balance", verifyToken, async (req, res) => {
   const account = await Account.findOne({
     userId: req.userId,
   });
-
+  if (!account) {
+    return res.status(404).json({
+      message: "Account not found",
+    });
+  }
   res.json({
     message: "Account balance fetched successfully",
     balance: account.balance,

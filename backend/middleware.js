@@ -5,7 +5,7 @@ const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    return res.status(403).json({ messafe: "No token provided" });
+    return res.status(403).json({ message: "No token provided" });
   }
 
   const token = authHeader.split(" ")[1];
@@ -16,7 +16,7 @@ const verifyToken = (req, res, next) => {
     req.userId = decoded.userId;
     next();
   } catch (err) {
-    return res.status(403).json({ message: "Token Expired" });
+    return res.status(403).json({ message: err.message });
   }
 };
 

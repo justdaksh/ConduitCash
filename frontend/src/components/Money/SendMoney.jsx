@@ -13,25 +13,40 @@ import {
 import { useNavigate } from "react-router-dom";
 
 export const SendMoney = React.memo(function SendMoney() {
+  const navigate = useNavigate();
   const [sentMoney, setSentMoney] = useState(false);
-  const [residualBalance, setResidualBalance] = useState(null);
+  const [error, setError] = useState(null);
   const [amount, setAmount] = useRecoilState(sendAmountAtom);
 
   const receiverId = useRecoilValue(sendToAtom);
   const receiverName = useRecoilValue(receiverAtom);
   const username = useRecoilValue(usernameAtom);
 
-  const navigate = useNavigate();
-
   const handleChange = (event) => {
     const value = event.target.value;
     setAmount(value);
   };
+  const validateAmount = (amount) => {
+    if (!amount || parseInt(amount) <= 0) {
+      return false;
+    }
+    return true;
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!amount || parseInt(amount) <= 0) {
-      console.error("Invalid amount");
+    if (!validateAmount(amount)) {
+      setError("Invalid amount");
+      const REDIRECT_DELAY = 2000;
+
+      setTimeout(() => {
+        setError("Redirecting to dashboard...");
+      }, 1000);
+
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, REDIRECT_DELAY);
+
       return;
     }
 
@@ -56,9 +71,7 @@ export const SendMoney = React.memo(function SendMoney() {
       }
     } catch (error) {
       console.error("Transfer failed:", error);
-      if (error.response && error.response.data) {
-        setResidualBalance(error.response.data.message);
-      }
+      setError(error.response.data.message);
     }
   };
 
@@ -103,9 +116,9 @@ export const SendMoney = React.memo(function SendMoney() {
                 title="Initiate Transfer"
                 className="w-full py-3 px-6 text-lg font-semibold text-white bg-gray-800 rounded-lg hover:bg-gray-700 transition duration-300 mb-4"
               />
-              {residualBalance !== null && (
+              {error !== null && (
                 <div className="mt-4 text-sm font-medium text-center text-gray-600 bg-gray-100 p-3 rounded-lg">
-                  {residualBalance}
+                  {error}
                 </div>
               )}
             </div>

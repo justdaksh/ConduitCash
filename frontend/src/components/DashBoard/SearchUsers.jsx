@@ -8,22 +8,27 @@ export const SearchUsers = React.memo(function SearchUsers() {
   const [Query, setIsQuery] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState("");
+  const [error, setError] = useState(null);
   const handleChange = (event) => {
     const { value } = event.target;
     setIsQuery(value);
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await axios.get(
-      `${import.meta.env.VITE_API_BASE_URL}user/bulk?filter=${Query}`,
-      {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      }
-    );
-    setFilter(response.data.users);
-    setIsLoading(false);
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}user/bulk?filter=${Query}`,
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      );
+      setFilter(response.data.users);
+      setIsLoading(false);
+    }catch (error) {
+      setError(error.response.data.message);
+    }
   };
   return (
     <div className="bg-white rounded-xl shadow-lg p-6">
@@ -46,6 +51,7 @@ export const SearchUsers = React.memo(function SearchUsers() {
         </div>
       </form>
       {!isLoading && <SearchComponent filter={filter} />}
+      {error && <div className="text-red-500 text-center">{error}</div>}
     </div>
   );
 });
