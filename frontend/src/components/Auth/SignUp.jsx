@@ -49,7 +49,7 @@ export const SignUp = React.memo(function SignUp() {
         setNumber(response.data.number);
         setUsername(response.data.username);
 
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("token",`Bearer ${response.data.token}`);
 
         navigate("/dashboard");
       }

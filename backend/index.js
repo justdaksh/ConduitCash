@@ -9,7 +9,11 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const cors = require("cors");
-app.use(cors());
+app.use(cors({
+  origin: process.env.CORS_ORIGIN,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true
+}));
 
 const MONGOURI = process.env.MONGOURI;
 const PORT = process.env.PORT || 5000;
