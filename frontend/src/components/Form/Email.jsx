@@ -13,7 +13,8 @@ export const Email = React.memo(function Email(props) {
         id={props.id}
         className={InputStyle}
         placeholder="name@example.com"
-        required
+        value={props.value}
+        onChange={props.onChange}
       />
     </>
   );
