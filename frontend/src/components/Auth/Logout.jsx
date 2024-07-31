@@ -7,7 +7,7 @@ export const Logout = React.memo(function Logout() {
     return(
         <>
         <SubmitButton title="Logout" onClick={() => {
-            localStorage.removeItem("token");
+            localStorage.clear();
             navigate("/login");
         }}/>
         </>
