@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Header } from "../Form/Header";
 import { SimpleInput } from "../Form/SimpleInput";
-import { SubmitButton } from "../Form/SubmitButton";
 import axios from "axios";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
@@ -11,10 +10,12 @@ import {
   usernameAtom,
 } from "../../state/atom";
 import { useNavigate } from "react-router-dom";
+import { ProcessingTransfer } from "./ProcessingTransfer";
 
 export const SendMoney = React.memo(function SendMoney() {
   const navigate = useNavigate();
   const [sentMoney, setSentMoney] = useState(false);
+  const [isTransferring, setIsTransferring] = useState(false);
   const [error, setError] = useState(null);
   const [amount, setAmount] = useRecoilState(sendAmountAtom);
 
@@ -50,6 +51,7 @@ export const SendMoney = React.memo(function SendMoney() {
       return;
     }
 
+    setIsTransferring(true);
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}account/transfer`,
@@ -72,6 +74,8 @@ export const SendMoney = React.memo(function SendMoney() {
     } catch (error) {
       console.error("Transfer failed:", error);
       setError(error.response.data.message);
+    } finally {
+      setIsTransferring(false);
     }
   };
 
@@ -96,33 +100,16 @@ export const SendMoney = React.memo(function SendMoney() {
               value={amount}
               onChange={handleChange}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+              disabled={isTransferring || sentMoney}
             />
           </div>
-
-          {sentMoney ? (
-            <div className="text-center">
-              <SubmitButton
-                title="Sent!"
-                className="w-full py-3 px-6 text-lg font-semibold text-white bg-green-600 rounded-lg hover:bg-green-700 transition duration-300 mb-4"
-                disabled
-              />
-              <div className="text-sm font-medium text-gray-600 mt-4">
-                Redirecting to dashboard shortly...
-              </div>
-            </div>
-          ) : (
-            <div>
-              <SubmitButton
-                title="Initiate Transfer"
-                className="w-full py-3 px-6 text-lg font-semibold text-white bg-gray-800 rounded-lg hover:bg-gray-700 transition duration-300 mb-4"
-              />
-              {error !== null && (
-                <div className="mt-4 text-sm font-medium text-center text-gray-600 bg-gray-100 p-3 rounded-lg">
-                  {error}
-                </div>
-              )}
-            </div>
-          )}
+          <ProcessingTransfer
+            sentMoney={sentMoney}
+            isTransferring={isTransferring}
+            receiverName={receiverName}
+            error={error}
+            amount={amount}
+          />
         </form>
       </div>
     </div>

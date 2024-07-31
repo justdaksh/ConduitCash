@@ -16,6 +16,7 @@ export const SimpleInput = React.memo(function SimpleInput(props) {
         className={InputStyle}
         placeholder={props.placeholder}
         required={props.required}
+        disabled={props.disabled}
       />
     </>
   );
