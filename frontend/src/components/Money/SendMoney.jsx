@@ -106,7 +106,7 @@ export const SendMoney = React.memo(function SendMoney() {
                 className="w-full py-3 px-6 text-lg font-semibold text-white bg-green-600 rounded-lg hover:bg-green-700 transition duration-300 mb-4"
                 disabled
               />
-              <div className="text-sm font-medium text-gray-600">
+              <div className="text-sm font-medium text-gray-600 mt-4">
                 Redirecting to dashboard shortly...
               </div>
             </div>
