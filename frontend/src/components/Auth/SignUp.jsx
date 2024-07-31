@@ -16,6 +16,7 @@ import {
   usernameAtom,
 } from "../../state/atom";
 import { useRecoilState } from "recoil";
+import { Loading } from "../Loading/Loading";
 
 export const SignUp = React.memo(function SignUp() {
   const navigate = useNavigate();
@@ -26,9 +27,11 @@ export const SignUp = React.memo(function SignUp() {
   const [password, setPassword] = useRecoilState(passwordAtom);
   const [number, setNumber] = useRecoilState(numberAtom);
   const [error, setError] = useState("");
+  const [isLoading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}auth/signup`,
@@ -41,8 +44,8 @@ export const SignUp = React.memo(function SignUp() {
           email: email,
         }
       );
-      console.log(response.data);
       if (response.data.token) {
+        setLoading(false);
         setFirstname(response.data.firstname);
         setLastname(response.data.lastname);
         setEmail(response.data.email);
@@ -54,7 +57,9 @@ export const SignUp = React.memo(function SignUp() {
         navigate("/dashboard");
       }
     } catch (error) {
+      setLoading(false);
       setError(error.response.data.message);
+      navigate("/signup");
     }
   };
   const handleChange = (event) => {
@@ -82,7 +87,7 @@ export const SignUp = React.memo(function SignUp() {
         console.warn(`Unhandled input field: ${id}`);
     }
   };
-  return (
+  return !isLoading ?(
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-100 to-gray-300">
       <div className="w-full max-w-4xl p-6">
         <form
@@ -104,7 +109,9 @@ export const SignUp = React.memo(function SignUp() {
         </form>
       </div>
     </div>
-  );
+  ):(
+    <Loading/>
+  )
 });
 
 const SignUpForm = ({

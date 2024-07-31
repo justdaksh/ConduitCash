@@ -14,7 +14,7 @@ const querySchema = zod
 export const SearchUsers = React.memo(function SearchUsers() {
   const [query, setQuery] = useState("");
   const [isError, setIsError] = useState(null);
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState([]);
 
   const handleChange = (event) => {
     const { value } = event.target;

@@ -15,10 +15,12 @@ import { SimpleInput } from "../Form/SimpleInput";
 import { Password } from "../Form/Password";
 import { SubmitButton } from "../Form/SubmitButton";
 import { FormFooter } from "../Form/FormFooter";
+import { Loading } from "../Loading/Loading";
 
 export const Login = React.memo(function Login() {
   const [username, setUsername] = useRecoilState(usernameAtom);
   const [password, setPassword] = useRecoilState(passwordAtom);
+  const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const setFirstname = useSetRecoilState(firstnameAtom);
@@ -29,6 +31,7 @@ export const Login = React.memo(function Login() {
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}auth/login`,
@@ -45,10 +48,14 @@ export const Login = React.memo(function Login() {
         setNumber(`${response.data.number}`);
         navigate("/dashboard");
       } else {
+        setLoading(false);
         console.warn("No token received from backend:", response.data);
+        navigate("/login");
       }
     } catch (error) {
+      setLoading(false);
       setError(error.response.data.message);
+      navigate("/login");
     }
   };
 
@@ -65,7 +72,7 @@ export const Login = React.memo(function Login() {
         console.warn(`Unhandled input change for id: ${id}`);
     }
   };
-  return (
+  return !isLoading ? (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-100 to-gray-300">
       <div className="w-full max-w-md">
         <form
@@ -79,7 +86,9 @@ export const Login = React.memo(function Login() {
         </form>
       </div>
     </div>
-  );
+  ):(
+    <Loading/>
+  )
 });
 
 const LoginForm = ({ onChange }) => {
