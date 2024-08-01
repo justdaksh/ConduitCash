@@ -52,7 +52,7 @@ export const SignUp = React.memo(function SignUp() {
         setNumber(response.data.number);
         setUsername(response.data.username);
 
-        localStorage.setItem("token",`Bearer ${response.data.token}`);
+        localStorage.setItem("token", `Bearer ${response.data.token}`);
 
         navigate("/dashboard");
       }
@@ -87,12 +87,12 @@ export const SignUp = React.memo(function SignUp() {
         console.warn(`Unhandled input field: ${id}`);
     }
   };
-  return !isLoading ?(
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-100 to-gray-300">
+  return !isLoading ? (
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-100 to-gray-300 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-4xl p-6">
         <form
           onSubmit={handleSubmit}
-          className="bg-white p-8 rounded-xl shadow-lg"
+          className="bg-white p-6 sm:p-8 rounded-xl shadow-lg"
         >
           <SignUpForm
             username={username}
@@ -109,9 +109,9 @@ export const SignUp = React.memo(function SignUp() {
         </form>
       </div>
     </div>
-  ):(
-    <Loading/>
-  )
+  ) : (
+    <Loading />
+  );
 });
 
 const SignUpForm = ({
@@ -128,7 +128,6 @@ const SignUpForm = ({
       <Header
         title="Sign Up"
         desc="Enter your information to create an account"
-        className="text-center mb-8"
       />
 
       <div className="flex flex-col md:flex-row md:space-x-6 mb-6">
@@ -180,10 +179,7 @@ const SignUpForm = ({
         </div>
       </div>
 
-      <SubmitButton
-        title="Sign Up"
-        className="w-full py-3 px-6 text-lg font-semibold text-white bg-gray-800 rounded-lg hover:bg-gray-700 transition duration-300 ease-in-out"
-      />
+      <SubmitButton title="Sign Up" />
 
       <FormFooter link="login" text="Already have an account?" title="Log In" />
     </>

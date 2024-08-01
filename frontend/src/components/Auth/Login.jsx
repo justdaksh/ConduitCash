@@ -73,11 +73,11 @@ export const Login = React.memo(function Login() {
     }
   };
   return !isLoading ? (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-100 to-gray-300">
-      <div className="w-full max-w-md">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-100 to-gray-300 px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-xs sm:max-w-sm lg:max-w-md">
         <form
           onSubmit={handleSubmit}
-          className="bg-white p-8 rounded-xl shadow-lg"
+          className="bg-white p-6 sm:p-8 rounded-xl shadow-lg"
         >
           <LoginForm onChange={handleChange} />
           {error && (
@@ -100,7 +100,7 @@ const LoginForm = ({ onChange }) => {
         title="Log In"
         desc="Enter your credentials to access your account"
       />
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         <SimpleInput
           label="Username"
           id="username"
@@ -117,7 +117,7 @@ const LoginForm = ({ onChange }) => {
         />
       </div>
 
-      <div className="mt-8">
+      <div className="mt-6 sm:mt-8">
         <SubmitButton title="Log In" />
       </div>
       <FormFooter link="signup" text="Don't have an account?" title="Sign Up" />
