@@ -1,10 +1,5 @@
-
 import { useRecoilValue } from "recoil";
-import {
-  firstnameAtom,
-  lastnameAtom,
-  usernameAtom,
-} from "../../state/atom";
+import { firstnameAtom, lastnameAtom, usernameAtom } from "../../state/atom";
 import { BalanceComponent } from "./BalanceComponent";
 import { Logout } from "../Auth/Logout";
 
@@ -16,8 +11,10 @@ export function DashBar() {
   return (
     <div className="bg-white rounded-xl shadow-lg p-6">
       <div className="flex justify-between items-center">
-        <div className="font-bold text-2xl text-gray-800">Paytm App</div>
-        <BalanceComponent />
+      <div className="font-bold text-2xl text-gray-800">ConduitCash</div>
+        <div className="flex-1 flex justify-center">
+          <BalanceComponent />
+        </div>
         <div className="flex items-center space-x-4">
           <div className="font-semibold text-xl text-gray-700">
             Hello, {username}

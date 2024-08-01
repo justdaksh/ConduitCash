@@ -14,7 +14,7 @@ export const FormFooter = React.memo(function FormFooter (props) {
             onClick={handleclick}
             className="text-gray-800 font-semibold hover:underline focus:outline-none"
           >
-            {props.link}
+            {props.title}
           </button>
         </p>
         </div>

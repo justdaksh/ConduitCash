@@ -86,9 +86,9 @@ export const Login = React.memo(function Login() {
         </form>
       </div>
     </div>
-  ):(
-    <Loading/>
-  )
+  ) : (
+    <Loading />
+  );
 });
 
 const LoginForm = ({ onChange }) => {
@@ -99,7 +99,6 @@ const LoginForm = ({ onChange }) => {
       <Header
         title="Log In"
         desc="Enter your credentials to access your account"
-        className="text-center mb-8"
       />
       <div className="space-y-6">
         <SimpleInput
@@ -108,7 +107,6 @@ const LoginForm = ({ onChange }) => {
           placeholder="Enter your username"
           value={username}
           onChange={onChange}
-          className="w-full"
         />
         <Password
           label="Password"
@@ -116,17 +114,13 @@ const LoginForm = ({ onChange }) => {
           placeholder="Enter your password"
           value={password}
           onChange={onChange}
-          className="w-full"
         />
       </div>
 
       <div className="mt-8">
-        <SubmitButton
-          title="Log In"
-          className="w-full py-3 px-6 text-lg font-semibold text-white bg-gray-800 rounded-lg hover:bg-gray-700 transition duration-300 ease-in-out"
-        />
+        <SubmitButton title="Log In" />
       </div>
-      <FormFooter link="signup" text="Don't have an account?" />
+      <FormFooter link="signup" text="Don't have an account?" title="Sign Up" />
     </>
   );
 };

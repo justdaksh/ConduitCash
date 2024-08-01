@@ -1,6 +1,6 @@
-## Building a basic version of PayTM
+## ConduitCash
 
-Transfer money to others (the shadow government) with just one click!
+Transfer money to users (a.k.a shadow government) with just one click!
 
 ## 🧙‍♂️ Usage
 

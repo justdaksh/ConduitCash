@@ -185,7 +185,7 @@ const SignUpForm = ({
         className="w-full py-3 px-6 text-lg font-semibold text-white bg-gray-800 rounded-lg hover:bg-gray-700 transition duration-300 ease-in-out"
       />
 
-      <FormFooter link="login" text="Already have an account?" />
+      <FormFooter link="login" text="Already have an account?" title="Log In" />
     </>
   );
 };
